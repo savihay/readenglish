@@ -31,7 +31,7 @@ h1 {
     margin-bottom: 12px;
     font-size: clamp(2rem, 2.8vw, 2.6rem);
     letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--indigo-start) 0%, var(--pink-end) 100%);
+    background: linear-gradient(135deg, var(--pink-start) 0%, var(--pink-end) 50%, var(--indigo-start) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -51,8 +51,8 @@ p {
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     backdrop-filter: blur(20px);
     padding: 18px 22px;
     border-radius: 22px;
