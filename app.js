@@ -10,11 +10,13 @@ const cardHebrewText = document.getElementById('card-hebrew-text');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const speakBtn = document.getElementById('speak-btn');
+const toggleCaseBtn = document.getElementById('toggle-case-btn');
 
 // --- State Variables ---
 let categories = [];
 let currentWords = [];
 let currentIndex = 0;
+let isUppercase = false;
 
 /**
  * Main initialization function
@@ -29,6 +31,9 @@ async function init() {
     nextBtn.addEventListener('click', nextCard);
     prevBtn.addEventListener('click', prevCard);
     speakBtn.addEventListener('click', speakWord);
+    toggleCaseBtn.addEventListener('click', toggleWordCase);
+
+    updateCaseToggleLabel();
 }
 
 /**
@@ -68,6 +73,7 @@ async function loadCategory(filePath) {
         // Shuffle the words for a different order each time
         currentWords = shuffleArray(data);
         currentIndex = 0;
+        resetCardFlip();
         displayCard(currentIndex);
     } catch (error) {
         console.error('Error loading category data:', error);
@@ -93,7 +99,7 @@ function displayCard(index) {
     const wordData = currentWords[index];
     
     // --- Front of the card ---
-    wordDisplay.textContent = wordData.word;
+    wordDisplay.textContent = isUppercase ? wordData.word.toUpperCase() : wordData.word;
     
     // --- Back of the card (with image fallback logic) ---
     cardImage.src = wordData.image;
@@ -114,7 +120,7 @@ function displayCard(index) {
     };
     
     // Reset card flip
-    card.classList.remove('is-flipped');
+    // Keep the current card orientation; navigation functions handle resets.
 }
 
 // --- Card Actions ---
@@ -125,11 +131,13 @@ function flipCard() {
 
 function nextCard() {
     currentIndex = (currentIndex + 1) % currentWords.length;
+    resetCardFlip();
     displayCard(currentIndex);
 }
 
 function prevCard() {
     currentIndex = (currentIndex - 1 + currentWords.length) % currentWords.length;
+    resetCardFlip();
     displayCard(currentIndex);
 }
 
@@ -140,6 +148,25 @@ function speakWord() {
     const utterance = new SpeechSynthesisUtterance(wordToSpeak);
     utterance.lang = 'en-US'; // Set language to English
     window.speechSynthesis.speak(utterance);
+}
+
+function toggleWordCase() {
+    isUppercase = !isUppercase;
+    updateCaseToggleLabel();
+
+    if (currentWords.length === 0) {
+        return;
+    }
+
+    displayCard(currentIndex);
+}
+
+function updateCaseToggleLabel() {
+    toggleCaseBtn.textContent = isUppercase ? 'Show Lowercase' : 'Show Uppercase';
+}
+
+function resetCardFlip() {
+    card.classList.remove('is-flipped');
 }
 
 /**

@@ -1,64 +1,95 @@
-/* Basic Setup */
+/* --- הגדרות בסיס ופונטים --- */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Rubik', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* שנה מ-center ל-flex-start */
     min-height: 100vh;
-    background-color: #f0f4f8;
+    background-color: #f5f7fa; /* רקע אפור-תכלת נעים */
     color: #333;
     text-align: center;
+    padding-top: 40px; /* הוספת מרווח עליון */
 }
 
 h1 {
-    color: #0056b3;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-/* Controls */
+p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+/* --- תפריט בחירת קטגוריה --- */
 .controls {
-    margin: 20px 0;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-select {
-    padding: 8px;
+.controls label {
     font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    color: #34495e;
 }
 
-/* Card Container & Perspective */
+#category-select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 8px;
+    border: 1px solid #bdc3c7;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#category-select:hover {
+    border-color: #3498db;
+}
+
+#category-select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* --- עיצוב הכרטיסייה (החלק העיקרי) --- */
 .card-container {
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
     perspective: 1000px;
     cursor: pointer;
-    margin: 20px;
 }
 
-/* Card */
 .card {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.6s;
+    transition: transform 0.7s;
 }
 
-/* Flipped State */
+/* מצב הפוך */
 .card.is-flipped {
     transform: rotateY(180deg);
 }
 
-/* Card Faces (Front & Back) */
+/* עיצוב אחיד לשני צדי הכרטיס */
 .card-front,
 .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(44, 62, 80, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,59 +98,78 @@ select {
     box-sizing: border-box;
 }
 
+/* צד קדמי (מילה באנגלית) */
 .card-front {
     background-color: #ffffff;
-    border: 2px solid #007bff;
+    border: 1px solid #ecf0f1;
 }
 
 .card-front h2 {
-    font-size: 3rem;
-    color: #0056b3;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #3498db;
+    margin: 0;
 }
 
+/* צד אחורי (תמונה ותרגום) */
 .card-back {
-    background-color: #e6f7ff;
+    background-color: #ecf0f1;
     transform: rotateY(180deg);
 }
 
 .card-back img {
-    max-width: 80%;
+    max-width: 100%;
     max-height: 200px;
-    display: block;
+    object-fit: contain; /* שומר על יחס התמונה */
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .card-back p {
-    font-size: 1.5rem;
-    color: #333;
-    margin-top: 10px;
-    font-weight: bold;
+    font-size: 2rem; /* גודל אחיד לטקסט העברי */
+    color: #34495e;
+    font-weight: 500;
+    margin: 0;
 }
 
-/* Navigation Buttons */
+/* --- כפתורי ניווט --- */
 .navigation {
     display: flex;
     gap: 15px;
+    margin-top: 30px;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #3498db;
     color: white;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #2980b9;
+    transform: translateY(-2px); /* אפקט ריחוף קטן */
+    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
 }
 
+button:active {
+    transform: translateY(0);
+}
+
+/* עיצוב מיוחד לכפתור ה-Speak */
 #speak-btn {
-    background-color: #28a745;
+    background-color: #2ecc71; /* ירוק */
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
 }
 
 #speak-btn:hover {
-    background-color: #218838;
+    background-color: #27ae60;
+    box-shadow: 0 6px 16px rgba(46, 204, 113, 0.3);
 }
