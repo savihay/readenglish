@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', init);
 
 // --- DOM Elements ---
-const categorySelect = document.getElementById('category-select');
+const categorySelector = document.getElementById('category-selector');
 const cardContainer = document.getElementById('card-container');
 const card = document.getElementById('card');
 const wordDisplay = document.getElementById('word-display');
@@ -23,11 +23,10 @@ let isTransitioning = false;
  * Main initialization function
  */
 async function init() {
-    // Load categories and populate the dropdown
+    // Load categories and populate the buttons
     await loadCategories();
     
     // Add event listeners
-    categorySelect.addEventListener('change', handleCategoryChange);
     cardContainer.addEventListener('click', flipCard);
     nextBtn.addEventListener('click', nextCard);
     prevBtn.addEventListener('click', prevCard);
@@ -39,28 +38,62 @@ async function init() {
 }
 
 /**
- * Fetches the list of categories from categories.json
+ * Fetches the list of categories from categories.json and creates buttons
  */
 async function loadCategories() {
     try {
         const res = await fetch('categories.json');
         categories = await res.json();
         
-        // Populate the select dropdown
+        categorySelector.innerHTML = ''; // Clear existing buttons
+        
         categories.forEach((cat, index) => {
-            const option = document.createElement('option');
-            option.value = index;
-            option.textContent = cat.name;
-            categorySelect.appendChild(option);
+            const button = document.createElement('button');
+            button.textContent = cat.name;
+            button.classList.add('category-btn');
+            button.dataset.index = index;
+            button.dataset.file = cat.file;
+            
+            button.addEventListener('click', handleCategoryClick);
+            
+            categorySelector.appendChild(button);
         });
         
         // Load the first category by default
         if (categories.length > 0) {
-            await loadCategory(categories[0].file);
+            await handleCategoryClick({ target: categorySelector.children[0] });
         }
     } catch (error) {
         console.error('Error loading categories:', error);
     }
+}
+
+/**
+ * Handles the click event of a category button
+ * @param {Event} e - The click event
+ */
+async function handleCategoryClick(e) {
+    const button = e.target;
+    const categoryIndex = button.dataset.index;
+    const categoryFile = button.dataset.file;
+    
+    await loadCategory(categoryFile);
+    updateActiveButton(categoryIndex);
+}
+
+/**
+ * Updates the active state of the category buttons
+ * @param {string} activeIndex - The index of the category to mark as active
+ */
+function updateActiveButton(activeIndex) {
+    const buttons = categorySelector.querySelectorAll('.category-btn');
+    buttons.forEach((button, index) => {
+        if (index == activeIndex) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
 }
 
 /**
@@ -79,15 +112,6 @@ async function loadCategory(filePath) {
     } catch (error) {
         console.error('Error loading category data:', error);
     }
-}
-
-/**
- * Handles the change event of the category dropdown
- */
-function handleCategoryChange() {
-    const selectedCategoryIndex = categorySelect.value;
-    const categoryFile = categories[selectedCategoryIndex].file;
-    loadCategory(categoryFile);
 }
 
 /**
