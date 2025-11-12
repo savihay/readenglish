@@ -1,16 +1,16 @@
 [
   {
-    "name": "Animals",
+    "name": "חיות",
     "id": "animals",
     "file": "data/animals.json"
   },
   {
-    "name": "Home",
+    "name": "בית",
     "id": "home",
     "file": "data/home.json"
   },
   {
-    "name": "Space",
+    "name": "חלל",
     "id": "space",
     "file": "data/space.json"
   }
