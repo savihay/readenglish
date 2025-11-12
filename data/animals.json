@@ -1,56 +1,122 @@
 [
-    {
-      "word": "cat",
-      "hebrew": "חתול",
-      "image": "images/animals/cat.png",
-      "vowel": "a"
-    },
-    {
-      "word": "bat",
-      "hebrew": "עטלף",
-      "image": "images/animals/bat.png",
-      "vowel": "a"
-    },
-    {
-      "word": "hen",
-      "hebrew": "תרנגולת",
-      "image": "images/animals/hen.png",
-      "vowel": "e"
-    },
-    {
-      "word": "pig",
-      "hebrew": "חזיר",
-      "image": "images/animals/pig.png",
-      "vowel": "i"
-    },
-    {
-      "word": "dog",
-      "hebrew": "כלב",
-      "image": "images/animals/dog.png",
-      "vowel": "o"
-    },
-    {
-      "word": "fox",
-      "hebrew": "שועל",
-      "image": "images/animals/fox.png",
-      "vowel": "o"
-    },
-    {
-      "word": "bug",
-      "hebrew": "חרק",
-      "image": "images/animals/bug.png",
-      "vowel": "u"
-    },
-    {
-      "word": "duck",
-      "hebrew": "ברווז",
-      "image": "images/animals/duck.png",
-      "vowel": "u"
-    },
-    {
-      "word": "dragon",
-      "hebrew": "דרקון",
-      "image": "images/animals/dragon.png",
-      "vowel": "a"
-    }
-  ]
+  {
+    "word": "cat",
+    "hebrew": "חתול",
+    "image": "images/animals/cat.png",
+    "vowel": "a"
+  },
+  {
+    "word": "bat",
+    "hebrew": "עטלף",
+    "image": "images/animals/bat.png",
+    "vowel": "a"
+  },
+  {
+    "word": "hen",
+    "hebrew": "תרנגולת",
+    "image": "images/animals/hen.png",
+    "vowel": "e"
+  },
+  {
+    "word": "pig",
+    "hebrew": "חזיר",
+    "image": "images/animals/pig.png",
+    "vowel": "i"
+  },
+  {
+    "word": "dog",
+    "hebrew": "כלב",
+    "image": "images/animals/dog.png",
+    "vowel": "o"
+  },
+  {
+    "word": "fox",
+    "hebrew": "שועל",
+    "image": "images/animals/fox.png",
+    "vowel": "o"
+  },
+  {
+    "word": "bug",
+    "hebrew": "חרק",
+    "image": "images/animals/bug.png",
+    "vowel": "u"
+  },
+  {
+    "word": "duck",
+    "hebrew": "ברווז",
+    "image": "images/animals/duck.png",
+    "vowel": "u"
+  },
+  {
+    "word": "dragon",
+    "hebrew": "דרקון",
+    "image": "images/animals/dragon.png",
+    "vowel": "a"
+  },
+  {
+    "word": "ant",
+    "hebrew": "נמלה",
+    "image": "images/animals/ant.png",
+    "vowel": "a"
+  },
+  {
+    "word": "rat",
+    "hebrew": "חולדה",
+    "image": "images/animals/rat.png",
+    "vowel": "a"
+  },
+  {
+    "word": "ram",
+    "hebrew": "אייל",
+    "image": "images/animals/ram.png",
+    "vowel": "a"
+  },
+  {
+    "word": "web",
+    "hebrew": "קורים",
+    "image": "images/animals/web.png",
+    "vowel": "e"
+  },
+  {
+    "word": "bee",
+    "hebrew": "דבורה",
+    "image": "images/animals/bee.png",
+    "vowel": "e"
+  },
+  {
+    "word": "cow",
+    "hebrew": "פרה",
+    "image": "images/animals/cow.png",
+    "vowel": "o"
+  },
+  {
+    "word": "lion",
+    "hebrew": "אריה",
+    "image": "images/animals/lion.png",
+    "vowel": "i"
+  },
+  {
+    "word": "fish",
+    "hebrew": "דג",
+    "image": "images/animals/fish.png",
+    "vowel": "i"
+  },
+  {
+    "word": "frog",
+    "hebrew": "צפרדע",
+    "image": "images/animals/frog.png",
+    "vowel": "o"
+  },
+  {
+    "word": "snake",
+    "hebrew": "נחש",
+    "image": "images/animals/snake.png",
+    "vowel": "a"
+  },
+  {
+    "word": "seal",
+    "hebrew": "כלב ים",
+    "image": "images/animals/seal.png",
+    "vowel": "e"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "word": "bed",
+    "hebrew": "מיטה",
+    "image": "images/home/bed.png",
+    "vowel": "e"
+  },
+  {
+    "word": "door",
+    "hebrew": "דלת",
+    "image": "images/home/door.png",
+    "vowel": "o"
+  },
+  {
+    "word": "key",
+    "hebrew": "מפתח",
+    "image": "images/home/key.png",
+    "vowel": "e"
+  },
+  {
+    "word": "box",
+    "hebrew": "קופסה",
+    "image": "images/home/box.png",
+    "vowel": "o"
+  },
+  {
+    "word": "cup",
+    "hebrew": "ספל",
+    "image": "images/home/cup.png",
+    "vowel": "u"
+  },
+  {
+    "word": "lamp",
+    "hebrew": "מנורה",
+    "image": "images/home/lamp.png",
+    "vowel": "a"
+  },
+  {
+    "word": "mat",
+    "hebrew": "שטיחון",
+    "image": "images/home/mat.png",
+    "vowel": "a"
+  },
+  {
+    "word": "pan",
+    "hebrew": "מחבת",
+    "image": "images/home/pan.png",
+    "vowel": "a"
+  },
+  {
+    "word": "pot",
+    "hebrew": "סיר",
+    "image": "images/home/pot.png",
+    "vowel": "o"
+  },
+  {
+    "word": "rug",
+    "hebrew": "שטיח",
+    "image": "images/home/rug.png",
+    "vowel": "u"
+  },
+  {
+    "word": "sofa",
+    "hebrew": "ספה",
+    "image": "images/home/sofa.png",
+    "vowel": "o"
+  },
+  {
+    "word": "tap",
+    "hebrew": "ברז",
+    "image": "images/home/tap.png",
+    "vowel": "a"
+  },
+  {
+    "word": "tub",
+    "hebrew": "אמבטיה",
+    "image": "images/home/tub.png",
+    "vowel": "u"
+  },
+  {
+    "word": "fan",
+    "hebrew": "מאוורר",
+    "image": "images/home/fan.png",
+    "vowel": "a"
+  },
+  {
+    "word": "room",
+    "hebrew": "חדר",
+    "image": "images/home/room.png",
+    "vowel": "o"
+  }
+]

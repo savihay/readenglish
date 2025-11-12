@@ -1,7 +1,17 @@
 [
-    {
-      "name": "Animals",
-      "id": "animals",
-      "file": "data/animals.json"
-    }
-  ]
+  {
+    "name": "Animals",
+    "id": "animals",
+    "file": "data/animals.json"
+  },
+  {
+    "name": "Home",
+    "id": "home",
+    "file": "data/home.json"
+  },
+  {
+    "name": "Space",
+    "id": "space",
+    "file": "data/space.json"
+  }
+]

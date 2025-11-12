@@ -1,0 +1,56 @@
+[
+  {
+    "word": "sun",
+    "hebrew": "שמש",
+    "image": "images/space/sun.png",
+    "vowel": "u"
+  },
+  {
+    "word": "moon",
+    "hebrew": "ירח",
+    "image": "images/space/moon.png",
+    "vowel": "o"
+  },
+  {
+    "word": "star",
+    "hebrew": "כוכב",
+    "image": "images/space/star.png",
+    "vowel": "a"
+  },
+  {
+    "word": "ship",
+    "hebrew": "חללית",
+    "image": "images/space/ship.png",
+    "vowel": "i"
+  },
+  {
+    "word": "alien",
+    "hebrew": "חייזר",
+    "image": "images/space/alien.png",
+    "vowel": "a"
+  },
+  {
+    "word": "sky",
+    "hebrew": "שמיים",
+    "image": "images/space/sky.png",
+    "vowel": "y"
+  },
+  {
+    "word": "comet",
+    "hebrew": "כוכב שביט",
+    "image": "images/space/comet.png",
+    "vowel": "o"
+  },
+  {
+    "word": "jet",
+    "hebrew": "מטוס סילון",
+    "image": "images/space/jet.png",
+    "vowel": "e"
+  },
+  {
+    "word": "mars",
+    "hebrew": "מאדים",
+    "image": "images/space/mars.png",
+    "vowel": "a"
+  }
+]

@@ -1,64 +1,92 @@
-/* --- הגדרות בסיס ופונטים --- */
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+/* --- Base setup & fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --indigo-start: #667eea;
+    --indigo-end: #764ba2;
+    --pink-start: #f093fb;
+    --pink-end: #f5576c;
+    --glass-bg: rgba(255, 255, 255, 0.92);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+}
 
 body {
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* שנה מ-center ל-flex-start */
+    justify-content: flex-start;
     min-height: 100vh;
-    background-color: #f5f7fa; /* רקע אפור-תכלת נעים */
-    color: #333;
+    background: linear-gradient(135deg, var(--indigo-start) 0%, var(--indigo-end) 100%);
+    color: var(--text-primary);
     text-align: center;
-    padding-top: 40px; /* הוספת מרווח עליון */
+    padding: 48px 18px 36px;
+    box-sizing: border-box;
 }
 
 h1 {
-    color: #2c3e50;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    font-size: clamp(2rem, 2.8vw, 2.6rem);
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--indigo-start) 0%, var(--pink-end) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 p {
-    font-size: 1.1rem;
-    color: #7f8c8d;
-    margin-bottom: 30px;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 32px;
+    max-width: 480px;
 }
 
-/* --- תפריט בחירת קטגוריה --- */
+/* --- Controls --- */
 .controls {
-    margin-bottom: 30px;
+    margin-bottom: 28px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(18px);
+    padding: 18px 22px;
+    border-radius: 18px;
+    box-shadow: 0 20px 45px -20px rgba(15, 23, 42, 0.5);
 }
 
 .controls label {
-    font-size: 1rem;
-    color: #34495e;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 #category-select {
-    padding: 10px 15px;
+    padding: 12px 18px;
     font-size: 1rem;
-    font-family: 'Rubik', sans-serif;
-    border-radius: 8px;
-    border: 1px solid #bdc3c7;
-    background-color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background: white;
+    color: var(--text-primary);
     cursor: pointer;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    box-shadow: 0 12px 35px -18px rgba(15, 23, 42, 0.45);
 }
 
 #category-select:hover {
-    border-color: #3498db;
+    border-color: var(--indigo-start);
+    transform: translateY(-1px);
 }
 
 #category-select:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    border-color: var(--indigo-start);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
 }
 
 .toggle-container {
@@ -70,7 +98,7 @@ p {
 .toggle-label {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-primary);
 }
 
 .switch {
@@ -119,12 +147,17 @@ p {
     transform: translateX(24px);
 }
 
-/* --- עיצוב הכרטיסייה (החלק העיקרי) --- */
+/* --- Flashcard --- */
 .card-container {
     width: 320px;
     height: 320px;
     perspective: 1000px;
     cursor: pointer;
+    border-radius: 24px;
+    padding: 6px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 30px 60px -25px rgba(15, 23, 42, 0.65);
 }
 
 .card {
@@ -140,15 +173,15 @@ p {
     transform: rotateY(180deg);
 }
 
-/* עיצוב אחיד לשני צדי הכרטיס */
+/* Faces */
 .card-front,
 .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(44, 62, 80, 0.1);
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -157,23 +190,23 @@ p {
     box-sizing: border-box;
 }
 
-/* צד קדמי (מילה באנגלית) */
 .card-front {
-    background-color: #ffffff;
-    border: 1px solid #ecf0f1;
+    background: linear-gradient(135deg, var(--indigo-start) 0%, var(--indigo-end) 100%);
+    color: white;
+    text-shadow: 0 12px 22px rgba(17, 24, 39, 0.35);
 }
 
 .card-front h2 {
-    font-size: 3.5rem;
+    font-size: clamp(3rem, 6vw, 3.6rem);
     font-weight: 700;
-    color: #3498db;
     margin: 0;
 }
 
-/* צד אחורי (תמונה ותרגום) */
 .card-back {
-    background-color: #ecf0f1;
+    background: linear-gradient(135deg, var(--pink-start) 0%, var(--pink-end) 100%);
     transform: rotateY(180deg);
+    color: white;
+    text-shadow: 0 10px 18px rgba(15, 23, 42, 0.35);
 }
 
 .card-back img {
@@ -184,51 +217,50 @@ p {
     margin-bottom: 15px;
 }
 
-.card-back p {
-    font-size: 2rem; /* גודל אחיד לטקסט העברי */
-    color: #34495e;
-    font-weight: 500;
+.card-back p,
+.card-front p {
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    font-weight: 600;
     margin: 0;
 }
 
-/* --- כפתורי ניווט --- */
+/* --- Buttons --- */
 .navigation {
     display: flex;
     gap: 15px;
-    margin-top: 30px;
+    margin-top: 32px;
 }
 
 button {
-    padding: 12px 24px;
+    padding: 14px 26px;
     font-size: 1rem;
-    font-family: 'Rubik', sans-serif;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 16px;
     cursor: pointer;
-    background-color: #3498db;
     color: white;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+    background: linear-gradient(135deg, var(--indigo-start) 0%, var(--indigo-end) 100%);
+    transition: transform 0.22s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    box-shadow: 0 18px 35px -20px rgba(102, 126, 234, 0.75);
 }
 
 button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px); /* אפקט ריחוף קטן */
-    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 26px 45px -20px rgba(102, 126, 234, 0.85);
+    filter: brightness(1.02);
 }
 
 button:active {
     transform: translateY(0);
+    box-shadow: 0 18px 35px -20px rgba(102, 126, 234, 0.75);
 }
 
-/* עיצוב מיוחד לכפתור ה-Speak */
 #speak-btn {
-    background-color: #2ecc71; /* ירוק */
-    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+    background: linear-gradient(135deg, var(--pink-start) 0%, var(--pink-end) 100%);
+    box-shadow: 0 18px 35px -20px rgba(245, 87, 108, 0.75);
 }
 
 #speak-btn:hover {
-    background-color: #27ae60;
-    box-shadow: 0 6px 16px rgba(46, 204, 113, 0.3);
+    box-shadow: 0 26px 45px -20px rgba(245, 87, 108, 0.85);
 }
