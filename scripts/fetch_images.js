@@ -4,7 +4,10 @@ const path = require('path'); // Node.js Path module
 const https = require('https'); // Node.js HTTPS module
 
 // --- Configuration ---
-const categoriesIndexFile = path.join('..', 'categories.json');
+// אנחנו בתיקיית 'scripts', אז אנחנו צריכים לעלות רמה אחת ('..')
+// כדי למצוא את הקבצים הראשיים.
+const baseDir = path.resolve(__dirname, '..'); 
+const categoriesIndexFile = path.join(baseDir, 'categories.json');
 
 // --- Helper Functions ---
 
@@ -23,52 +26,66 @@ async function ensureDirectoryExists(dirPath) {
 
 /**
  * Fetches an image from a URL and saves it to a file.
- * We use the 'https' module because 'node-fetch' isn't standard
- * and 'source.unsplash.com' might redirect, which 'https.get' handles.
- * @param {string} url - The image URL to fetch.
- * @param {string} filePath - The local path to save the image.
+ * (MODIFIED to include User-Agent)
  */
 function downloadImage(url, filePath) {
-  return new Promise((resolve, reject) => {
-    https.get(url, (response) => {
-      // Handle redirects
-      if (response.statusCode > 300 && response.statusCode < 400 && response.headers.location) {
-        // Recursively call with the new URL
-        return downloadImage(response.headers.location, filePath).then(resolve).catch(reject);
-      }
-
-      // Handle non-successful status codes
-      if (response.statusCode !== 200) {
-        return reject(new Error(`Failed to get '${url}' (${response.statusCode})`));
-      }
-
-      // Create a file stream to save the image
-      const fileStream = fsSync.createWriteStream(filePath);
-      response.pipe(fileStream);
-
-      fileStream.on('finish', () => {
-        fileStream.close(resolve);
-      });
-
-      fileStream.on('error', (err) => {
-        fs.unlink(filePath); // Delete the partial file
+    return new Promise((resolve, reject) => {
+      
+      // NEW: Parse the URL to get hostname and path
+      const parsedUrl = new URL(url);
+  
+      // NEW: Define request options, including a fake browser header
+      const options = {
+        hostname: parsedUrl.hostname,
+        path: parsedUrl.pathname + parsedUrl.search,
+        method: 'GET',
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+      };
+  
+      // Make the request using the options object
+      https.get(options, (response) => {
+        // Handle redirects
+        if (response.statusCode > 300 && response.statusCode < 400 && response.headers.location) {
+          // Build the new URL (handling relative redirects)
+          const redirectUrl = new URL(response.headers.location, url).href;
+          return downloadImage(redirectUrl, filePath).then(resolve).catch(reject);
+        }
+  
+        // Handle non-successful status codes
+        if (response.statusCode !== 200) {
+          return reject(new Error(`Failed to get '${url}' (${response.statusCode})`));
+        }
+  
+        // Create a file stream to save the image
+        const fileStream = fsSync.createWriteStream(filePath);
+        response.pipe(fileStream);
+  
+        fileStream.on('finish', () => {
+          fileStream.close(resolve);
+        });
+  
+        fileStream.on('error', (err) => {
+          fs.unlink(filePath); // Delete the partial file
+          reject(err);
+        });
+      }).on('error', (err) => {
         reject(err);
       });
-    }).on('error', (err) => {
-      reject(err);
     });
-  });
-}
+  }
 
 /**
  * Reads all categories and triggers image downloads per category.
  */
 async function processImages() {
   console.log('--- Starting Image Fetch Script ---');
+  console.log(`Base directory: ${baseDir}`);
+  console.log(`Loading categories from: ${categoriesIndexFile}`);
 
   try {
-    const categoriesPath = path.resolve(__dirname, categoriesIndexFile);
-    const categoriesContent = await fs.readFile(categoriesPath, 'utf8');
+    const categoriesContent = await fs.readFile(categoriesIndexFile, 'utf8');
     const categories = JSON.parse(categoriesContent);
 
     if (!Array.isArray(categories) || categories.length === 0) {
@@ -82,7 +99,8 @@ async function processImages() {
         continue;
       }
 
-      const categoryPath = path.resolve(__dirname, '..', category.file);
+      // הנתיב לקובץ הקטגוריה הוא יחסי ל-baseDir
+      const categoryPath = path.join(baseDir, category.file);
 
       let words;
       try {
@@ -108,7 +126,8 @@ async function processImages() {
           continue;
         }
 
-        const localImagePath = path.resolve(__dirname, '..', imagePath);
+        // הנתיב לתמונה הוא יחסי ל-baseDir
+        const localImagePath = path.join(baseDir, imagePath);
         const imageDir = path.dirname(localImagePath);
         await ensureDirectoryExists(imageDir);
 
@@ -136,7 +155,7 @@ async function processImages() {
         }
 
         // Add a small delay to avoid spamming the server
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
     }
   } catch (err) {

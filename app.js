@@ -17,6 +17,7 @@ let categories = [];
 let currentWords = [];
 let currentIndex = 0;
 let showUppercase = false;
+let isTransitioning = false;
 
 /**
  * Main initialization function
@@ -96,46 +97,62 @@ function handleCategoryChange() {
 function displayCard(index) {
     if (currentWords.length === 0) return;
 
-    resetCardFlip();
-
-    const wordData = currentWords[index];
-    
-    // --- Front of the card ---
-    const wordToDisplay = showUppercase ? wordData.word.toUpperCase() : wordData.word;
-    wordDisplay.textContent = wordToDisplay;
-    
-    // --- Back of the card (with image fallback logic) ---
-    cardImage.src = wordData.image;
-    cardHebrewText.textContent = wordData.hebrew;
-    
-    // Reset styles
-    cardImage.style.display = 'block';
-    cardHebrewText.style.fontSize = '1.5rem';
-    cardHebrewText.style.marginTop = '10px';
-
-    cardImage.onerror = () => {
-        // If image fails to load, hide it
-        cardImage.style.display = 'none';
+    const applyContent = () => {
+        const wordData = currentWords[index];
         
-        // Make the Hebrew text bigger to fill the space
-        cardHebrewText.style.fontSize = '3rem';
-        cardHebrewText.style.marginTop = '0';
+        const wordToDisplay = showUppercase ? wordData.word.toUpperCase() : wordData.word;
+        wordDisplay.textContent = wordToDisplay;
+        
+        cardImage.style.display = 'block';
+        cardHebrewText.style.fontSize = '1.5rem';
+        cardHebrewText.style.marginTop = '10px';
+        
+        cardHebrewText.textContent = wordData.hebrew;
+        cardImage.onerror = () => {
+            cardImage.style.display = 'none';
+            cardHebrewText.style.fontSize = '3rem';
+            cardHebrewText.style.marginTop = '0';
+        };
+        cardImage.src = wordData.image;
+        
+        isTransitioning = false;
     };
-    
+
+    if (card.classList.contains('is-flipped')) {
+        isTransitioning = true;
+        const handleTransitionEnd = () => {
+            card.removeEventListener('transitionend', handleTransitionEnd);
+            applyContent();
+        };
+        card.addEventListener('transitionend', handleTransitionEnd, { once: true });
+        card.classList.remove('is-flipped');
+    } else {
+        applyContent();
+    }
 }
 
 // --- Card Actions ---
 
 function flipCard() {
+    if (isTransitioning) return;
+
+    isTransitioning = true;
     card.classList.toggle('is-flipped');
+    const handleTransitionEnd = () => {
+        card.removeEventListener('transitionend', handleTransitionEnd);
+        isTransitioning = false;
+    };
+    card.addEventListener('transitionend', handleTransitionEnd, { once: true });
 }
 
 function nextCard() {
+    if (isTransitioning || currentWords.length === 0) return;
     currentIndex = (currentIndex + 1) % currentWords.length;
     displayCard(currentIndex);
 }
 
 function prevCard() {
+    if (isTransitioning || currentWords.length === 0) return;
     currentIndex = (currentIndex - 1 + currentWords.length) % currentWords.length;
     displayCard(currentIndex);
 }
@@ -164,11 +181,6 @@ function shuffleArray(array) {
 
 function handleUppercaseToggle() {
     showUppercase = uppercaseToggle ? uppercaseToggle.checked : false;
+    if (isTransitioning) return;
     displayCard(currentIndex);
-}
-
-function resetCardFlip() {
-    if (card) {
-        card.classList.remove('is-flipped');
-    }
 }
